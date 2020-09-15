@@ -6,9 +6,9 @@ public class PlayerControllerScript : MonoBehaviour
 {
     private float speed = 10;
     private float jumpForce = 10;
-    public float gravityModifier;
     private float leftborder = -7;
     private float rightborder = 11;
+    public float gravityModifier;
     public bool isOnGround = true;
     public Rigidbody2D playerRigidBody;
     
@@ -30,7 +30,6 @@ public class PlayerControllerScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
         MovePlayer();
         PlayerContraints();
     }
