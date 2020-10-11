@@ -30,7 +30,7 @@ public class PlayerControllerScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        MovePlayer();
+        PlayerHorizontalMovement();
         PlayerContraints();
     }
 
@@ -56,13 +56,26 @@ public class PlayerControllerScript : MonoBehaviour
     }
 
     // this makes the player translate left and right based on arrow input
-    void MovePlayer()
+    void PlayerHorizontalMovement()
     {
-        transform.Translate(Vector2.right * speed * Time.deltaTime * Input.GetAxis("Horizontal"));
+        if (Input.GetKey("right"))
+        {
+            Debug.Log("Right button pressed");
+            playerRigidBody.velocity = new Vector2(speed, playerRigidBody.velocity.y);
+        }
+        else if (Input.GetKey("left"))
+        {
+            Debug.Log("Left button pressed");
+            playerRigidBody.velocity = new Vector2(-speed, playerRigidBody.velocity.y);
+        }
+        else
+        {
+            Debug.Log("not moving");
+            playerRigidBody.velocity = new Vector2(0, playerRigidBody.velocity.y);
+        }
     }
-   
         //this sets the bounds of where the player can go
-    void PlayerContraints()
+        void PlayerContraints()
     {
         if (transform.position.x < leftborder)
         {
