@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerControllerScript : MonoBehaviour
 {
-    private float speed = 10;
-    private float jumpForce = 10;
-    private float leftborder = -7;
+    private float gravityModifier = 3;
     private float rightborder = 11;
-    public float gravityModifier;
+    private float leftborder = -7;
+    private float jumpForce = 10;
+    private float speed = 10;
+    private int numberOfAirJumps = 0;
+    private int maxAirJumps = 1;
     public bool isOnGround = true;
     public Rigidbody2D playerRigidBody;
     
@@ -48,10 +50,15 @@ public class PlayerControllerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
         {
-            playerRigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            Debug.Log("you tried to jump");
+            numberOfAirJumps = 0;
+            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
             isOnGround = false;
-
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && isOnGround==false && numberOfAirJumps < maxAirJumps)
+        {
+            numberOfAirJumps = 1;
+            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
+            Debug.Log("Air jump");
         }
     }
 
@@ -60,22 +67,19 @@ public class PlayerControllerScript : MonoBehaviour
     {
         if (Input.GetKey("right"))
         {
-            Debug.Log("Right button pressed");
             playerRigidBody.velocity = new Vector2(speed, playerRigidBody.velocity.y);
         }
         else if (Input.GetKey("left"))
         {
-            Debug.Log("Left button pressed");
             playerRigidBody.velocity = new Vector2(-speed, playerRigidBody.velocity.y);
         }
         else
         {
-            Debug.Log("not moving");
             playerRigidBody.velocity = new Vector2(0, playerRigidBody.velocity.y);
         }
     }
         //this sets the bounds of where the player can go
-        void PlayerContraints()
+    void PlayerContraints()
     {
         if (transform.position.x < leftborder)
         {
@@ -87,11 +91,6 @@ public class PlayerControllerScript : MonoBehaviour
         }
     }
     
-    // i have prevented a double jump
-    // i have set boundaries on the player movement area
-    // i have set a rigid body component to the enemy
-    // next i want to make a mele damage system 
-    // goal is that when i press the "a" key, the enemy gets destroyed
     
 
 

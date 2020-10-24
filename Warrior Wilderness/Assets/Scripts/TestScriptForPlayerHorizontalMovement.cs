@@ -50,4 +50,12 @@ public class TestScriptForPlayerHorizontalMovement : MonoBehaviour
             playerRigidBody.velocity = new Vector2(0, playerRigidBody.velocity.y);
         }
     }
+
+    void PlayerDash()
+    {
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+
+        }
+    }
 }
