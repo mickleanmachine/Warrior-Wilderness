@@ -13,6 +13,8 @@ public class PlayerControllerScript : MonoBehaviour
     private int maxAirJumps = 1;
     public bool isOnGround = true;
     public Rigidbody2D playerRigidBody;
+    public Animator animator;
+
     
 
     // Start is called before the first frame update
@@ -29,6 +31,7 @@ public class PlayerControllerScript : MonoBehaviour
     void Update()
     {
         Jump();
+        PlayerAttack();
     }
     private void FixedUpdate()
     {
@@ -77,6 +80,7 @@ public class PlayerControllerScript : MonoBehaviour
         {
             playerRigidBody.velocity = new Vector2(0, playerRigidBody.velocity.y);
         }
+        animator.SetFloat("Speed", playerRigidBody.velocity.magnitude);
     }
         //this sets the bounds of where the player can go
     void PlayerContraints()
@@ -89,6 +93,19 @@ public class PlayerControllerScript : MonoBehaviour
         {
             transform.position = new Vector2(rightborder, transform.position.y);
         }
+    }
+
+    void PlayerAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            animator.SetBool("Attack", true);
+        }
+        else //if (Input.GetKeyUp(KeyCode.A))
+        {
+            animator.SetBool("Attack", false);
+        }
+        //need to find out how to make to where the attack animation only plays once when i hit A button
     }
     
     
